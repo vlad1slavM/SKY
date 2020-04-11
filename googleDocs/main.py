@@ -1,14 +1,29 @@
+import json
+
 import requests
+import re
+import sys
+
+
+reqular = re.compile(r'"name": ".+"')
 
 def loginbot(login, password):
     s = requests.Session()
+    s.get('https://cloud.mail.ru/')
 
-    s.get(f'https: // yandex.ru')
+    data = {'Login': login,
+            'Domain': 'mail.ru',
+            'Password': password,
+            'saveauth': '1',
+            'new_auth_form': '1',
+            'FromAccount': 'opener=account&vk=1&ok=1&twoSteps=1',
+            'act_token': '',
+            'page': 'https://cloud.mail.ru/?authid=k8v75gff.6m&dwhsplit=s6763.a1s3319.n1s&from=login&from-page=promo&from-promo=blue-2018',
+            'lang': 'ru_RU'}
 
-    data = {'csrf_token': 'dbb90c302db0dbce37c706ea87f3581077c8bb4a:1586357248483',
-            'login': login,
-            'process_uuid': '4c961af1-6cb2-4ca0-9cdf-e6225badbe2d',
-            'retpath': 'https://disk.yandex.ru?source=landing2_signin_ru',
-            'origin': 'disk_landing2_signin_ru',
-            'service': 'cloud'
-            }
+    r = s.post('https://auth.mail.ru/cgi-bin/auth', data=data)
+    text = r.text
+
+    return re.findall(reqular, text)
+
+print(loginbot('vladislav_3982', 'Markgavno1'))
