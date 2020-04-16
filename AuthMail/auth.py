@@ -1,8 +1,5 @@
-import json
-
 import requests
 import re
-import sys
 
 
 reqular = re.compile(r'"name": ".+"')
@@ -25,5 +22,3 @@ def loginbot(login, password):
     text = r.text
 
     return re.findall(reqular, text)
-
-print(loginbot('vladislav_3982', 'Markgavno1'))
