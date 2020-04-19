@@ -1,19 +1,25 @@
 #!/usr/bin/env python3
+import hashlib
 import os
 
-list_of_files = os.listdir(f'D:\\test')
+
+def sync(directory):
+    list_of_files = os.listdir(directory)
+    dictOfFiles = {}
+    if 'currentState.txt' not in list_of_files:
+        open(os.path.join(directory, 'currentState.txt'), "w", encoding="utf-8")
+    else:
+        log = open(directory + '\\currentState.txt', 'w', encoding='utf-8')
+        for el in list_of_files:
+            dictOfFiles[el] = hashlib.md5(el.encode('utf-8')).hexdigest()
+        log.write(str(dictOfFiles))
+        log.close()
 
 
-def sync():
-    log = open('D:\\test\\currentState.txt', 'w', encoding='utf-8')
-    for el in list_of_files:
-        log.write(str(el) + '\n')
-    log.close()
-
-
-def diff():
+def diff(directory):
     log = []
-    file = open('D:\\test\\currentState.txt', 'r',  encoding='utf-8')
+    list_of_files = os.listdir(directory)
+    file = open(directory + '\\currentState.txt', 'r',  encoding='utf-8')
     for row in file:
         new_row = row[:-1]
         log.append(new_row)

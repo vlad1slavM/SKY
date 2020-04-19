@@ -24,12 +24,9 @@ def loginbot(login, password):
     text = r.text
     result = re.findall(reqular, text)
     k = 0
-
-    print(result[0])
     for i in range(len(result)):
         if k == 2:
           files.append(result[i])
         if result[i] == '/':
             k += 1
-
     return files
