@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import os
 
 list_of_files = os.listdir(f'D:\\test')

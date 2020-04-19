@@ -1,6 +1,8 @@
+#!/usr/bin/env python3
 from AuthMail.auth import loginbot
 from StateOfDirectory.currentState import sync, diff
 
-print(loginbot('vladislav_3982', 'Markgavno1'))
+print(loginbot('testforpython12', '^cf487z4j#R*pdR'))
 sync()
-print(diff())
+#print(diff())
+

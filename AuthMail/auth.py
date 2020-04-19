@@ -1,13 +1,15 @@
+#!/usr/bin/env python3
 import requests
 import re
 
 
-reqular = re.compile(r'"name": ".+"')
+reqular = re.compile(r'"name": "(.+)"')
+
 
 def loginbot(login, password):
     s = requests.Session()
+    files = []
     s.get('https://cloud.mail.ru/')
-
     data = {'Login': login,
             'Domain': 'mail.ru',
             'Password': password,
@@ -20,5 +22,14 @@ def loginbot(login, password):
 
     r = s.post('https://auth.mail.ru/cgi-bin/auth', data=data)
     text = r.text
+    result = re.findall(reqular, text)
+    k = 0
 
-    return re.findall(reqular, text)
+    print(result[0])
+    for i in range(len(result)):
+        if k == 2:
+          files.append(result[i])
+        if result[i] == '/':
+            k += 1
+
+    return files
