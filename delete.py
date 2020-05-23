@@ -1,29 +1,13 @@
-import hashlib, hmac, os, stat, sys
+'''https://cloud.mail.ru/home/test1.txt'''
+import json
 
-def file_hash(name):
-    f = open(name)
-    h = hashlib.sha256()
-    while True:
-        buf = f.read(16384)
-        if len(buf) == 0: break
-        h.update(buf)
-    f.close()
-    return h.hexdigest()
 
-def traverse(h, path):
-    rs = os.lstat(path)
-    quoted_name = repr(path)
-    if stat.S_ISDIR(rs.st_mode):
-        h.update('dir ' + quoted_name + '\n')
-        for entry in sorted(os.listdir(path)):
-            traverse(h, os.path.join(path, entry))
-    elif stat.S_ISREG(rs.st_mode):
-        h.update('reg ' + quoted_name + ' ')
-        h.update(str(rs.st_size) + ' ')
-        h.update(file_hash(path) + '\n')
+file = 'C:\\Users\\dlach\\Documents\\GitHub\\SKY\\forTest\\currentState.json'
+dict = {'test1.txt': 'b444ac06613fc8d63795be9ad0beaf55011936ac', 'test2.txt': '109f4b3c50d7b0df729d299bc6f8e9ef9066971f', 'test3.txt': 'e81803683a032fb1084163fee1efb28b032a64f6', 'test4.txt': 'da39a3ee5e6b4b0d3255bfef95601890afd80709'}
 
-h = hashlib.sha256()
-for root in sys.argv[1:]:
-    traverse(h, 'D\\test')
-    h.update('end\n')
-print (h.hexdigest())
+with open(file, "w") as write_file:
+    data = json.dump(dict, write_file)
+
+with open(file, 'r') as read_file:
+    date = json.load(read_file)
+print(date['test1.txt'])
