@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 import fire
-from AuthMail.auth import Auth
+from AuthMail.auth import login_bot
 from StateOfDirectory.currentState import State
 import argparse
 
-state = State('C:\\Users\\dlach\\Documents\\GitHub\\SKY\\forTest')
+# state = State('C:\\Users\\dlach\\Documents\\GitHub\\SKY\\forTest')
 '''auth = Auth('testforpython12', '^cf487z4j#R*pdR')'''
 
 parser = argparse.ArgumentParser()
@@ -13,24 +13,29 @@ parser.add_argument(
     '--login_password',
     type=str,
     nargs=2,
-    help='login_password'
+    help='Введите -lp Логин и Пароль'
 )
 
 parser.add_argument(
     '-d',
     '--direction',
     type=str,
-    help='direction '
+    help='Введите -d директория, с которой вы будете работать '
 )
 
-my_namespace = parser.parse_args()
+parser.add_argument('-a',
+                    '--action',
+                    type=str,
+                    help='Выберите функцию которую хотите вызвать'
+                    )
 
-auth = Auth(str(my_namespace.login_password[0]),
-            str(my_namespace.login_password[1]))
+my_namespace = parser.parse_args()
+state = State(my_namespace.direction)
 
 
 def auth_mail():
-    return auth.login_bot()
+    print(login_bot(my_namespace.login_password[0],
+                    my_namespace.login_password[1]))
 
 
 def sync():
@@ -38,12 +43,15 @@ def sync():
 
 
 def diff():
-    return state.diff()
+    print(state.diff())
 
 
-def check():
-    return state.check_local_coincidence()
+'''def check():
+    return state.check_local_coincidence'''
 
-
-print(auth_mail())
-
+if my_namespace.action == 'auth':
+    auth_mail()
+elif my_namespace.action == 'sync':
+    sync()
+elif my_namespace.action == 'diff':
+    diff()

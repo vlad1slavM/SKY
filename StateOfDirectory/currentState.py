@@ -2,7 +2,7 @@
 
 import hashlib
 import os
-from AuthMail.auth import Auth
+from AuthMail.auth import login_bot
 import json
 import fire
 
@@ -55,7 +55,7 @@ class State:
                     was_change.append(el)
         return was_change
 
-    def check_local_coincidence(self):
+    '''def check_local_coincidence(self):
         auth = Auth('testforpython12', '^cf487z4j#R*pdR')
         list_of_files = []
         for el in os.listdir(self.directory):
@@ -68,8 +68,6 @@ class State:
         if str(coincidence) == 'set()':
             print('Nothing change')
         else:
-            print(coincidence)
+            print(coincidence)'''
 
 
-if __name__ == '__main__':
-    fire.Fire(State)
