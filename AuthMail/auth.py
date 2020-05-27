@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import requests
 import re
-import fire
 reqular = re.compile(r'"name": "(.+)"')
 reqular_token = re.compile(r'"csrf": "(.+)"')
 
@@ -30,18 +29,15 @@ class Auth:
 
         r = s.post('https://auth.mail.ru/cgi-bin/auth', data=data)
         text = r.text
-        print(text)
         result = re.findall(reqular, text)
         k = 0
         token = re.findall(reqular_token, text)
-        #print(token)
         for i in range(len(result)):
             if k == 2:
                 files.append(result[i])
             if result[i] == '/':
                 k += 1
+        print(self.login + '\n' + self.password)
+        print('Success')
+        print(files)
         return files
-
-
-if __name__ == '__main__':
-    fire.Fire(Auth)
