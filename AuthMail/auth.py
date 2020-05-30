@@ -31,7 +31,23 @@ def login_bot(login, password):
             files.append(result[i])
         if result[i] == '/':
             k += 1
-    print(login + '\n' + password)
-    print('Success')
-    print(files)
     return files
+
+
+def download(file):
+    '''https://cloclo3.cloud.mail.ru/attach/test.txt?x-email=testforpython12%40mail.ru'''
+
+    link_for_download = r'https://cloclo3.cloud.mail.ru/attach/' + str(file)\
+                        + r'?x-email=testforpython12%40mail.ru'
+
+    r = requests.get(url=link_for_download, stream=True)
+
+    with open('1.txt', 'wb') as f:
+        for chunk in r.iter_content(chunk_size=1024 * 36):
+            if chunk:
+                f.write(chunk)
+                f.flush()
+    r.close()
+
+
+download('test1.txt')

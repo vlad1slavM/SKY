@@ -1,13 +1,7 @@
 '''https://cloud.mail.ru/home/test1.txt'''
 
-import argparse
-parser = argparse.ArgumentParser()
-parser.add_argument(
-    '--n',
-    type=int,
-    help='provide an integer '
-)
-my_namespace = parser.parse_args()
-
-print(my_namespace.n ** 2)
-
+from StateOfDirectory.currentState import State
+import os
+direction = r'C:\Users\dlach\Documents\GitHub\SKY\forTest1'
+state = State(direction)
+state.sync()

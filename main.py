@@ -1,11 +1,8 @@
 #!/usr/bin/env python3
-import fire
 from AuthMail.auth import login_bot
 from StateOfDirectory.currentState import State
 import argparse
 
-# state = State('C:\\Users\\dlach\\Documents\\GitHub\\SKY\\forTest')
-'''auth = Auth('testforpython12', '^cf487z4j#R*pdR')'''
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -45,9 +42,6 @@ def sync():
 def diff():
     print(state.diff())
 
-
-'''def check():
-    return state.check_local_coincidence'''
 
 if my_namespace.action == 'auth':
     auth_mail()

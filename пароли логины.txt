@@ -1,0 +1,2 @@
+state = State('C:\\Users\\dlach\\Documents\\GitHub\\SKY\\forTest')
+auth = Auth('testforpython12', '^cf487z4j#R*pdR')

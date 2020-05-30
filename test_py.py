@@ -1,27 +1,45 @@
 import unittest
-from AuthMail.auth import loginbot
-from StateOfDirectory.currentState import sync
+from AuthMail.auth import login_bot
+from StateOfDirectory.currentState import State, md5
+import json
+direction = r'C:\Users\dlach\Documents\GitHub\SKY\forTest1'
+state = State(direction)
+state_2 = State(r'C:\Users\dlach\Documents\GitHub\SKY\forTest2')
 
 
 class TestGetFiles(unittest.TestCase):
     def test_auth(self):
         answer = ['Mail.ru рекомендует',
-                  'testik',
                   'Берег.jpg',
                   'Горное озеро.jpg',
                   'Долина реки.jpg',
                   'На отдыхе.jpg',
                   'Полет.mp4',
                   'Чистая вода.jpg']
-        self.assertEqual(loginbot('testforpython12', '^cf487z4j#R*pdR'),
+        self.assertEqual(login_bot('testforpython13@mail.ru', 'R&ft3OKEprs1'),
                          answer)
 
     def test_sync(self):
-        answer = {'adasdad.txt': 'dda1bb9cc0e76a1fdf005b1380619240',
-                  'asd.txt': 'd9ef8c633400198e5e6c6480e18cfd1d',
-                  'currentState.txt': '03d2f517b7d7f768e54edfd21934480e',
-                  'dffffff.txt': 'f7b616ef776ff01adabf558837a72453'}
-        self.assertEqual(sync('forTest'), str(answer))
+        answer = "{'1.txt': '356a192b7913b04c54574d18c28d46e6395428ab'," \
+                 " '2.txt': 'da4b9237bacccdf19c0760cab7aec4a8359010b0'," \
+                 " '3.txt': '77de68daecd823babbb58edb1c8e14d7106e83bb'," \
+                 " '4.txt': '1b6453892473a467d07372d45eb05abc2031647a'}"
+        state.sync()
+        with open(direction + '\\currentState.json', 'r') as read_file:
+            dict = json.load(read_file)
+        self.assertEqual(str(dict), answer)
+
+    def test_diff_when_nothing_change(self):
+        answer = []
+        self.assertEqual(state.diff(), answer)
+
+    def test_diff_when_something_was_change(self):
+        answer = ['1.txt']
+        self.assertEqual(state_2.diff(), answer)
+
+    def test_md5(self):
+        answer = "356a192b7913b04c54574d18c28d46e6395428ab"
+        self.assertEqual(md5(direction, '1.txt'), answer)
 
 
 if __name__ == '__main__':

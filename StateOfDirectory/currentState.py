@@ -2,9 +2,7 @@
 
 import hashlib
 import os
-from AuthMail.auth import login_bot
 import json
-import fire
 
 
 def md5(directory, filename):
@@ -55,19 +53,5 @@ class State:
                     was_change.append(el)
         return was_change
 
-    '''def check_local_coincidence(self):
-        auth = Auth('testforpython12', '^cf487z4j#R*pdR')
-        list_of_files = []
-        for el in os.listdir(self.directory):
-            if el == 'currentState.txt':
-                continue
-            else:
-                list_of_files.append(el)
-        list_of_files_on_mail = list(auth.login_bot())
-        coincidence = set(list_of_files) ^ set(list_of_files_on_mail)
-        if str(coincidence) == 'set()':
-            print('Nothing change')
-        else:
-            print(coincidence)'''
 
 
