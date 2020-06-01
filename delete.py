@@ -1,7 +1,8 @@
-'''https://cloud.mail.ru/home/test1.txt'''
+import requests
 
-from StateOfDirectory.currentState import State
-import os
-direction = r'C:\Users\dlach\Documents\GitHub\SKY\forTest1'
-state = State(direction)
-state.sync()
+url = r'https://cloud.mail.ru/api/v2/file/add'
+s = requests.post(url)
+print(s.text)
+
+file = 'F95058792223816D32DCF2799A18EE74A72F2D23'
+print(file.lower())

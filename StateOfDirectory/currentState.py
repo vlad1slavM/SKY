@@ -53,5 +53,5 @@ class State:
                     was_change.append(el)
         return was_change
 
-
+#print(md5(r'C:\Users\dlach\Documents\GitHub\SKY', 'пароли логины.txt'))
 
