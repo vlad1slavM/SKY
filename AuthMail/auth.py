@@ -38,7 +38,7 @@ def login_bot(login, password):
     files_meta = {}
     for i in range(len(files)):
         files_meta[files[i]] = str(hash[i]).lower()
-    return files_meta
+    return files_meta, token
 
 
 def download(file):
@@ -82,9 +82,9 @@ def upload(login, password):
             'Accept': '*/*',
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept-Language': 'ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3',
-            'X-CSRF-Token': str(token),
+            'X-CSRF-Token': token[0],
             'Connection': 'keep-alive',
-            'Content-Length': '248',
+            'Content-Length': '224',
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
             'Cookie': 'VID=1YiMVO2tdEHx00000Q0qD4Hx:::3e91a7e-0-0-3a83a10:CAASENwpynP3SixM4f70LUtK0K0aYMETdp33ceZAe2AWz4JxBGn_9tbVlQvzUThxbYolhQMoDM27LSG8eREC9SNRlswYjuyMrqT3_ul4dDnlGGPLCnUq5izkIZ49Jee1JNrGlnNGjRjDH7g0NSAmHYjey_KN8g; _ga=GA1.2.1102720450.1586584001; mrcu=1EBA5E9159C233D1EB12C5DE97C1; p=oJMAAIv/RQAA; tmr_reqNum=96; tmr_lvid=cc1c8e23f0788d150505fdbf0d1f1782; tmr_lvidTS=1586584004864; s=octavius=1|fver=0|ww=1920|wh=944|rt=1|dpr=1.25; i=AQB4otNeBAC7AQgEAQIAAb0HCAQBmRUBSAwFAgEAiQ0FAgHy; b=7EcBAJDj7XEA/qPvhhgAAEAYZ5ZMBn0c51AYq5EFhPMaWUAA; c=qrjTXgEAkHsTAAAUAAQACQAAIMIBnLGmDwAA; searchuid=9823344891586356522; Mpop=1590608318:70797462064055651905000017031f051c054f6c5150445e05190401041d455c434357564b48484459585b0607105956505d1e444d:testforpython12@mail.ru:; t=obLD1AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAACAAAEGzAcA; o=testforpython12@mail.ru:229:Ag==.s; sdcs=aJkMNUPG5c1q3WVr; _ym_uid=1590075035500165857; _ym_d=1590075035; _fbp=fb.1.1590075035813.108013153; OTVET-8088=1; _gid=GA1.2.1155570725.1590927994; tmr_detect=0%7C1590933678298; _gat_gtag_UA_43037165_12=1',
             'Host': 'cloud.mail.ru',
@@ -96,11 +96,11 @@ def upload(login, password):
 
     '''s.post('https://cloud.mail.ru/api/v1/folder/add', headers=headers,
            data=data)'''
-    text1 = s.post('https://cloud.mail.ru/api/v2/file/add', data=data)
+    text1 = s.get('https://cloud.mail.ru/api/v2/file/add', data=data)
     text = r.post('https://cloud.mail.ru/api/v2/file/add', data=data)
     '''text1 = s.post('https://cloud.mail.ru/api/v2/file/add', headers=data,
                    data=headers)'''
-    print(text1.text)
+    print(text1.headers)
 
 
-login_bot('testforpython12', '^cf487z4j#R*pdR')
+upload('testforpython12', '^cf487z4j#R*pdR')
