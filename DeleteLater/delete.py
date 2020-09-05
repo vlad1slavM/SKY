@@ -10,6 +10,8 @@ reqular_token = re.compile(r'"csrf": "(.+)"')
 <Cookie sdcs=reqpFIJR4Qh9AcNj for .cloud.mail.ru/>
 <Cookie Mpop=1591109991:5d505f77595d520f1905000017031f051c054f6c5150445e05190401041d455c434357564b48484459585b0607105956505d1e444d:testforpython12@mail.ru: for .mail.ru/>
 '''
+
+
 def login_bot(login, password):
     s = requests.Session()
     files = []

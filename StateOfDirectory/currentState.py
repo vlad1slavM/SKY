@@ -1,8 +1,15 @@
 #!/usr/bin/env python3
-
 import hashlib
 import os
 import json
+
+
+def get_files(directory):
+    dir_files = []
+    for root, dirs, files in os.walk(directory):
+        for filename in files:
+            dir_files.append(filename)
+    return dir_files
 
 
 def md5(directory, filename):
@@ -20,7 +27,7 @@ class State:
         self.directory = directory
 
     def sync(self):
-        list_of_files = os.listdir(self.directory)
+        list_of_files = get_files(self.directory)
         dict_of_files = {}
         if 'currentState.json' not in list_of_files:
             open(os.path.join(self.directory, 'currentState.json'), "w",
@@ -41,17 +48,20 @@ class State:
 
     def diff(self):
         was_change = []
+        not_in_dir = []
         log = str(self.directory) + '\\currentState.json'
         with open(log, 'r') as read_file:
             dict = json.load(read_file)
-        files = os.listdir(self.directory)
-        for el in files:
-            if el == 'currentState.json':
+        dir_files = get_files(self.directory)
+        print(dir_files)
+        for filename in dir_files:
+            if filename == 'currentState.json':
                 continue
+            elif filename not in dict:
+                not_in_dir.append(filename)
             else:
-                if dict[el] != md5(self.directory, el):
-                    was_change.append(el)
-        return was_change
+                if dict[filename] != md5(self.directory, filename):
+                    was_change.append(str(filename))
 
-#print(md5(r'C:\Users\dlach\Documents\GitHub\SKY', 'пароли логины.txt'))
+        return was_change
 
