@@ -62,6 +62,5 @@ class State:
             else:
                 if dict[filename] != md5(self.directory, filename):
                     was_change.append(str(filename))
-
         return was_change
 

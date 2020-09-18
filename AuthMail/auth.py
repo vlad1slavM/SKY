@@ -38,9 +38,9 @@ def login_bot(login, password):
     return files_meta
 
 #Нужен логин пароль, а так же полная дериктория куда скачать, и имя файла :
-#download('testforpython12', '^cf487z4j#R*pdR', r'C:\Users\dlach\Documents\GitHub\SKY', 'test1.txt')
 
 
+login_bot('testforpython12', '^cf487z4j#R*pdR')
 def download(login, password, directory, filename):
     s = requests.Session()
     s.get('https://cloud.mail.ru/')
@@ -59,8 +59,7 @@ def download(login, password, directory, filename):
     url = r'https://cloclo25.cloud.mail.ru/attach/' + filename \
           + r'?x-email=testforpython12%40mail.ru'
     text = s.get(url)
-    os.chdir(directory)
-    print(os.chdir(directory))
+    os.chdir(str(directory))
     open(os.path.join(directory, filename), "w",
          encoding="utf-8")
     with open(filename, 'wb') as f:
@@ -71,4 +70,4 @@ def download(login, password, directory, filename):
     text.close()
 
 
-
+download('testforpython12', '^cf487z4j#R*pdR', r'D:\Документы\!GitHub\SKY', 'test1.txt')

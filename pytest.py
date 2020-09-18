@@ -5,9 +5,11 @@ import json
 import os
 import hashlib
 
-directory = os.path.abspath(r'../forTest1')
+#directory = os.path.abspath(r'../forTest1')
+directory = str(os.getcwd()) + r'\forTest1'
+print(directory)
 state = State(directory)
-state_2 = State(os.path.abspath(r'../forTest2'))
+state_2 = State(str(os.getcwd()) + r'\forTest2')
 
 
 def sha1(filename):
