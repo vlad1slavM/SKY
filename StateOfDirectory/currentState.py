@@ -28,39 +28,28 @@ class State:
 
     def sync(self):
         list_of_files = get_files(self.directory)
-        dict_of_files = {}
-        if 'currentState.json' not in list_of_files:
-            open(os.path.join(self.directory, 'currentState.json'), "w",
-                 encoding="utf-8")
-            log = str(self.directory) + '\\currentState.json'
+        files = []
+        with open(os.path.join(self.directory, 'currentState.json'), "w",
+                  encoding="utf-8") as log:
             for el in list_of_files:
-                dict_of_files[el] = md5(self.directory, el)
-            with open(log, 'w') as write_file:
-                json.dump(dict_of_files, write_file)
-        else:
-            log = str(self.directory) + '\\currentState.json'
-            for el in list_of_files:
-                if el == 'currentState.json':
-                    continue
-                dict_of_files[el] = md5(self.directory, el)
-            with open(log, 'w') as write_file:
-                json.dump(dict_of_files, write_file)
+                files.append(el)
+            json.dump(files, log)
 
     def diff(self):
-        was_change = []
-        not_in_dir = []
-        log = str(self.directory) + '\\currentState.json'
-        with open(log, 'r') as read_file:
-            dict = json.load(read_file)
-        dir_files = get_files(self.directory)
-        print(dir_files)
-        for filename in dir_files:
-            if filename == 'currentState.json':
+        list_of_files = get_files(self.directory)
+        files = []
+        dict_different = {'DELETE': [], 'NEW': []}
+        for i in range(len(list_of_files)):
+            if list_of_files[i] == 'currentState.json':
                 continue
-            elif filename not in dict:
-                not_in_dir.append(filename)
             else:
-                if dict[filename] != md5(self.directory, filename):
-                    was_change.append(str(filename))
-        return was_change
+                files.append(list_of_files[i])
+        with open(os.path.join(self.directory, 'currentState.json'), "r",
+                  encoding="utf-8") as log:
+            files_from_json = json.load(log)
+        was_delete = set(files_from_json) - set(files)
+        new_files = set(files) - set(files_from_json)
+        dict_different['DELETE'] = was_delete
+        dict_different['NEW'] = new_files
+        print(dict_different)
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from AuthMail.auth import CloudMail
+from AuthMail.auth import get_files_name, download_file, download_all_files
 from StateOfDirectory.currentState import State
 import argparse
 import getpass
@@ -25,12 +25,6 @@ parser.add_argument('-f',
                     help='Введите название файла, который хотите скачать'
                     )
 
-parser.add_argument('-w',
-                    '--web',
-                    type=str,
-                    help='Выберите директорию, которую хотите скачать из облака'
-                    )
-
 my_namespace = parser.parse_args()
 state = State(my_namespace.direction)
 
@@ -38,8 +32,7 @@ state = State(my_namespace.direction)
 def auth_mail():
     login = str(input("User Name : "))
     password = getpass.getpass()
-    mail = CloudMail(login, password, "", "")
-    return mail.get_files_name()
+    return get_files_name(login, password)
 
 
 def sync():
@@ -53,8 +46,14 @@ def diff():
 def load():
     login = str(input("User Name : "))
     password = getpass.getpass()
-    mail = CloudMail(login, password, my_namespace.web, my_namespace.direction)
-    return mail.download()
+    return download_file(login, password, my_namespace.direction,
+                         my_namespace.file)
+
+
+def all_files():
+    login = str(input("User Name : "))
+    password = getpass.getpass()
+    return download_all_files(login, password, my_namespace.direction)
 
 
 if my_namespace.action == 'files':
@@ -65,3 +64,5 @@ elif my_namespace.action == 'diff':
     diff()
 elif my_namespace.action == 'download':
     load()
+elif my_namespace.action == 'download all':
+    all_files()
