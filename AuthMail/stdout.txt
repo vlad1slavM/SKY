@@ -1,1 +1,0 @@
-{'home/': {'test1.txt', 'test3.txt', 'test.txt', 'test4.txt', 'test2.txt'}, 'test': [], 'тестовый каталог': ['main.py', 'README.md', 'requirements.txt', 'Новый документ.docx'], 'halloween': []}

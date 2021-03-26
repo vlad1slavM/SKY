@@ -12,15 +12,6 @@ def get_files(directory):
     return dir_files
 
 
-def md5(directory, filename):
-    hash_md5 = hashlib.sha1()
-    os.chdir(directory)
-    with open(filename, "rb") as f:
-        for chunk in iter(lambda: f.read(4096), b""):
-            hash_md5.update(chunk)
-    return hash_md5.hexdigest()
-
-
 class State:
 
     def __init__(self, directory):
@@ -29,27 +20,27 @@ class State:
     def sync(self):
         list_of_files = get_files(self.directory)
         files = []
-        with open(os.path.join(self.directory, 'currentState.json'), "w",
+        dict_files = {"files": []}
+        current_state_file = os.path.join(self.directory, 'currentState.json')
+        with open(current_state_file, "w",
                   encoding="utf-8") as log:
             for el in list_of_files:
-                files.append(el)
-            json.dump(files, log)
+                if el != 'currentState.json':
+                    files.append(el)
+            dict_files["files"] = files
+            json.dump(dict_files, log)
 
     def diff(self):
         list_of_files = get_files(self.directory)
         files = []
-        dict_different = {'DELETE': [], 'NEW': []}
+
         for i in range(len(list_of_files)):
-            if list_of_files[i] == 'currentState.json':
-                continue
-            else:
+            if list_of_files[i] != 'currentState.json':
                 files.append(list_of_files[i])
         with open(os.path.join(self.directory, 'currentState.json'), "r",
                   encoding="utf-8") as log:
             files_from_json = json.load(log)
-        was_delete = set(files_from_json) - set(files)
-        new_files = set(files) - set(files_from_json)
-        dict_different['DELETE'] = was_delete
-        dict_different['NEW'] = new_files
-        print(dict_different)
+        dict_different = {'DELETE': set(files_from_json) - set(files),
+                          'NEW': set(files) - set(files_from_json)}
+        return dict_different
 
