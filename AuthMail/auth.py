@@ -4,6 +4,10 @@ import re
 import os
 
 
+class DropBoxCloud:
+    pass
+
+
 class MailRuCloud:
     def __init__(self, login, password, web_directory, directory):
         self.login = login
@@ -58,26 +62,29 @@ class MailRuCloud:
         s = MailRuCloud.get_list_and_session(self)[1]
         file_dir = MailRuCloud.get_files(self, s, self.web_directory)[0]
         text = MailRuCloud.get_files(self, s, self.web_directory)[1]
+        is_alone_file = False
         if self.web_directory == '/':
             directories = set(re.findall(self.reg_dir, text))
             for dir in directories:
                 files = MailRuCloud.get_files(self, s, dir)[0]
                 for file in files:
                     file_dir.append(file)
-            print(file_dir)
 
         else:
             path = self.web_directory.split('/')
-            if len(path) == 1:
-                for file in file_dir:
-                    MailRuCloud.real_download(self, s, file[1], file[0])
-                    print(f'{file[0]} was download :)')
             if len(path) == 2:
                 for file in file_dir:
                     if file[0] == path[1]:
-                        MailRuCloud.real_download(self, s, file[1], file[0])
-                        print(f'{file[0]} was download :)')
+                        file_dir = file
+                        is_alone_file = True
                         break
+        if is_alone_file:
+            MailRuCloud.real_download(self, s, file_dir[1], file_dir[0])
+            print(f'{file_dir[0]} was download :)')
+        else:
+            for file in file_dir:
+                MailRuCloud.real_download(self, s, file[1], file[0])
+                print(f'{file[0]} was download :)')
 
     def real_download(self, s, web_directory, file_name):
         url = f'https://cloclo21.cloud.mail.ru/attach{web_directory}/' \
@@ -96,4 +103,3 @@ if __name__ == '__main__':
     mail = MailRuCloud('testforpython12', '^cf487z4j#R*pdR', "/",
                        "/home/vladislav/Documents/!GitHub/SKY/down_for_test")
     mail.download()
-

@@ -42,20 +42,24 @@ state = State(my_namespace.direction)
 
 
 if __name__ == "__main__":
-    login = str(input("User Name : "))
-    if my_namespace.action == 'files':
-        password = getpass.getpass()
-        mail = MailRuCloud(login, password, "", "")
-        print(mail.get_files_name())
+    if not my_namespace.action:
+        print('''Пожалуйста, введите, что вы хотите сделать через флаг [-a]
+Пример: python main.py -a download''')
+    else:
+        login = str(input("User Name : "))
+        if my_namespace.action == 'files':
+            password = getpass.getpass()
+            mail = MailRuCloud(login, password, "", "")
+            print(mail.get_files_name())
 
-    elif my_namespace.action == 'sync':
-        print(state.sync())
+        elif my_namespace.action == 'sync':
+            print(state.sync())
 
-    elif my_namespace.action == 'diff':
-        state.diff()
+        elif my_namespace.action == 'diff':
+            state.diff()
 
-    elif my_namespace.action == 'download':
-        password = getpass.getpass()
-        mail = MailRuCloud(login, password, my_namespace.cloudFile,
-                           my_namespace.direction)
-        mail.download()
+        elif my_namespace.action == 'download':
+            password = getpass.getpass()
+            mail = MailRuCloud(login, password, my_namespace.cloudFile,
+                               my_namespace.direction)
+            mail.download()
