@@ -47,16 +47,25 @@ class MailRuCloud:
             files.append(el[0])
         return files
 
-    def download(self):
-        s = MailRuCloud.get_list_and_session(self)[1]
-        d = s.get(f'https://cloud.mail.ru/home/{self.web_directory}/')
+    def get_files(self, s,  web_directory):
+        d = s.get(f'https://cloud.mail.ru/home/{web_directory}/')
         text = d.text
         file_dir = re.findall(self.reg_name_dir, text)
-        file_dir = file_dir[:int(len(file_dir)/2)]
+        file_dir = file_dir[:int(len(file_dir) / 2)]
+        return file_dir, text
+
+    def download(self):
+        s = MailRuCloud.get_list_and_session(self)[1]
+        file_dir = MailRuCloud.get_files(self, s, self.web_directory)[0]
+        text = MailRuCloud.get_files(self, s, self.web_directory)[1]
         if self.web_directory == '/':
-            path = '/'
-            dir = set(re.findall(self.reg_dir, text))
-            
+            directories = set(re.findall(self.reg_dir, text))
+            for dir in directories:
+                files = MailRuCloud.get_files(self, s, dir)[0]
+                for file in files:
+                    file_dir.append(file)
+            print(file_dir)
+
         else:
             path = self.web_directory.split('/')
             if len(path) == 1:
@@ -83,8 +92,8 @@ class MailRuCloud:
         request.close()
 
 
-mail = MailRuCloud('testforpython12', '^cf487z4j#R*pdR', "/",
-                   "/home/vladislav/Documents/!GitHub/SKY/down_for_test")
-
-mail.download()
+if __name__ == '__main__':
+    mail = MailRuCloud('testforpython12', '^cf487z4j#R*pdR', "/",
+                       "/home/vladislav/Documents/!GitHub/SKY/down_for_test")
+    mail.download()
 
