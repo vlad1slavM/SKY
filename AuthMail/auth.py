@@ -51,7 +51,7 @@ class MailRuCloud:
             files.append(el[0])
         return files
 
-    def get_files(self, s,  web_directory):
+    def get_files(self, s: requests.Session,  web_directory: str) -> [str]:
         d = s.get(f'https://cloud.mail.ru/home/{web_directory}/')
         text = d.text
         file_dir = re.findall(self.reg_name_dir, text)

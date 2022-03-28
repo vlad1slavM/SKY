@@ -12,13 +12,13 @@ class TestGetFiles(unittest.TestCase):
     mail = MailRuCloud('testforpython13@mail.ru', 'R&ft3OKEprs1', "", "")
 
     def test_auth(self):
-        answer = {'home/': {'Берег.jpg',
+        answer = ['Берег.jpg',
                             'Горное озеро.jpg',
                             'Долина реки.jpg',
                             'На отдыхе.jpg',
                             'Полет.mp4',
-                            'Чистая вода.jpg'}}
-        self.assertEqual(TestGetFiles.mail.get_files_name(), answer)
+                            'Чистая вода.jpg']
+        self.assertEqual(answer, TestGetFiles.mail.get_files_name())
 
     def test_sync(self):
         same = False
