@@ -5,6 +5,7 @@ import requests
 # Также свои excepthions
 
 def get_list_files_dirs(path: str) -> dict:
+    """Get list of files from Yandex DISK"""
     headers = {
         "Accept": "application/json",
         "Authorization": "OAuth AQAAAAAVWAlWAADLWyVJbHXmPEZSnL1L2TtLTrA"
@@ -19,6 +20,7 @@ def get_list_files_dirs(path: str) -> dict:
 
 
 def get_file_content(file_path: str) -> bytes:
+    """Get content of file from Yandex DISK"""
     headers = {
         "Accept": "application/json",
         "Authorization": "OAuth AQAAAAAVWAlWAADLWyVJbHXmPEZSnL1L2TtLTrA"

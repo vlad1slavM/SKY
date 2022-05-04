@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDataSourceStorage">
+    <option name="dataSources">
+      <list>
+        <State>
+          <option name="id" value="5336a7c6-4d34-42a8-bf9e-527124e4cf26" />
+          <option name="name" value="fileDB" />
+          <option name="urls">
+            <array>
+              <option value="file://$PROJECT_DIR$/Yandex/fileDB.sqlite" />
+            </array>
+          </option>
+        </State>
+      </list>
+    </option>
+  </component>
+</project>
