@@ -1,14 +1,20 @@
 import requests
+import dotenv
+import os
 
+dotenv.load_dotenv()
 
 # TODO нужно будет добавить try except
 # Также свои excepthions
+
+YandexOAuth = os.environ.get('YANDEXOAUTH')
+
 
 def get_list_files_dirs(path: str) -> dict:
     """Get list of files from Yandex DISK"""
     headers = {
         "Accept": "application/json",
-        "Authorization": "OAuth AQAAAAAVWAlWAADLWyVJbHXmPEZSnL1L2TtLTrA"
+        "Authorization": f"OAuth {YandexOAuth}"
     }
     params = {
         "path": path
@@ -23,7 +29,7 @@ def get_file_content(file_path: str) -> bytes:
     """Get content of file from Yandex DISK"""
     headers = {
         "Accept": "application/json",
-        "Authorization": "OAuth AQAAAAAVWAlWAADLWyVJbHXmPEZSnL1L2TtLTrA"
+        "Authorization": f"OAuth {YandexOAuth}"
     }
     params = {
         "path": file_path
@@ -34,5 +40,3 @@ def get_file_content(file_path: str) -> bytes:
                                  headers=headers).json()['href']
     content = requests.get(download_link).content
     return content
-
-

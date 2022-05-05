@@ -1,4 +1,7 @@
-/venv**
 *sqlite
 *ipynb
 .DS_Store
+.idea
+*.log
+*.ipynb
+.env

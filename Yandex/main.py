@@ -4,9 +4,7 @@ from Yandex.DB.db import DataBase
 
 def start(path: str) -> None:
     y = YandexFiles()
-    start = time.time()
     y.get_files_list_from_cloud(path)
-    print(time.time() - start)
 
 
 if __name__ == '__main__':
