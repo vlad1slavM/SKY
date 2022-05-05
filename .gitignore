@@ -1,1 +1,4 @@
 /venv**
+*sqlite
+*ipynb
+.DS_Store

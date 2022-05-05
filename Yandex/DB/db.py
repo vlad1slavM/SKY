@@ -14,7 +14,7 @@ class DataBase():
     def __init__(self):
         self.db_engine = create_engine(f"sqlite:///{DATABASE_NAME}.sqlite")
 
-    def create(self):
+    def create(self) -> None:
         metadata = MetaData()
         file = Table(DATABASE_TABLE_NAME, metadata,
                      Column('id', Integer, primary_key=True),
